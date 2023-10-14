@@ -1,11 +1,32 @@
-"use client";
+import { Metadata } from "next";
+import Link from "next/link";
+import TestButton from "./components/Temp";
+import { getSortedPostsData } from "./lib/posts";
 
-import { JGButton } from "off-design-system";
+export const metadata: Metadata = {
+  title: "asdasdasd",
+  description: "asdasdasd",
+};
 
 export default function Home() {
+  const allPostsData = getSortedPostsData();
+
+  console.log(allPostsData);
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <JGButton>jgjgill</JGButton>
-    </main>
+    <>
+      <main
+        style={{ flexDirection: "column", gap: "10px" }}
+        className="flex items-center justify-between">
+        <TestButton />
+        <ul style={{ flexDirection: "column", gap: "10px" }} className="flex">
+          {allPostsData.map(({ id, date, title }: any) => (
+            <li key={id}>
+              <Link href={`/posts/${id}`}>{title}</Link>
+            </li>
+          ))}
+        </ul>
+      </main>
+    </>
   );
 }
